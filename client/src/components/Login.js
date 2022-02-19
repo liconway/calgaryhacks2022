@@ -35,11 +35,9 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
     </Form.Group>
-    <Link to='/main'>
     <Button block size="lg" type="submit" disabled={!validateForm()}>
       Login
     </Button>
-    </Link>
   </Form>
   );
 }

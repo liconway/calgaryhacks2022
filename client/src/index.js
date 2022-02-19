@@ -2,14 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Journal from './components/Journal';
 import background from './img/background.png';
 
 ReactDOM.render(
   <React.StrictMode>
+    <body>
     <Journal />
+    </body>
   </React.StrictMode>,
   document.getElementById('root')
 );
