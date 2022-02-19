@@ -15,89 +15,48 @@ const Journal = () => {
   useEffect(() => {
     const getJournal = async () => {
       const res = await fetchJournal();
-    //   setTitleState(res);
-    //   setEditorState(res);
+      setTitleState(res);
+      setEditorState(res);
     };
     getJournal();
   }, []);
 
   const fetchJournal = async () => {
-
-    const res = await fetch("https://ch22-api.herokuapp.com/dewit?user=userid123", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      "https://ch22-api.herokuapp.com/dewit?user=userid123",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
     // const data = await res.json();
     const data = await res.text();
-    console.log(data);
     return data;
   };
 
   const saveJournal = async (journal) => {
-    const res = await fetch("https://ch22-api.herokuapp.com/dewit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(journal),
+    const res = await fetch("https://ch22-api.herokuapp.com/note", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(journal),
     });
+    const data = await res.text();
+
+    return data;
   };
-  // useEffect(() => {
-  //     // const setEditorState = async () => {
-  //     //   //const tasksFromServer = await fetchJournal()
-  //     //   const tasksFromServer = "hello"
-  //     //   setEditorState(tasksFromServer)
-  //     // }
-  //     console.log(editorState);
-  //   }, [editorState])
-
-  // const fetchJournal = async () => {
-  //     const res = await fetch(' https://ch22-api-test.herokuapp.com/dewit')
-  //     const data = await res.json()
-  //     console.log(data)
-  //     return data
-  // }
-
-  // const fetchSingleJournal = async (id) => {
-  //     const res = await fetch(`https://ch22-api-test.herokuapp.com/dewit/${id}`)
-  //     const data = await res.json()
-  //     return data
-  // }
-
-  // const addJournal = async (journal) => {
-  //     const res = await fetch('https://ch22-api-test.herokuapp.com/dewit', {
-  //         method: 'POST',
-  //         headers: {
-  //             'Content-type': 'application/json',
-  //         },
-  //         body: JSON.stringify(journal),
-  //     })
-
-  //     const data = await res.json()
-
-  //     setEditorState([...editorState, data])
-
-  // }
-
-  // const deleteJournal = async (id) => {
-  //     const res = await fetch(`https://ch22-api-test.herokuapp.com/dewit/${id}`, {
-  //         method: 'DELETE',
-  //         headers: {
-  //             'Content-type': 'application/json',
-  //         },
-  //     })
-
-  // }
 
   function handleSave(event) {
     var title = titleState;
     var content = editorState.getCurrentContent().getPlainText("\u0001");
 
     var journal = {
+      userid: "userid321",
       title: title,
-      content: content,
+      text: content,
     };
     console.log(journal);
     event.preventDefault();
@@ -117,18 +76,22 @@ const Journal = () => {
             class="form-control"
             id="title"
             placeholder="Title goes here"
-            value={titleState}
+            // value={titleState}
             onChange={(e) => setTitleState(e.target.value)}
+            style={{ border: "1px solid black" }}
           ></input>
         </div>
         <div
           style={{
             border: "1px solid black",
             padding: "2px",
-            minHeight: "550px",
+            minHeight: "580px",
           }}
         >
-          <Editor value={editorState} onEditorStateChange={setEditorState} />
+          <Editor
+            value={editorState.getCurrentContent}
+            onEditorStateChange={setEditorState}
+          />
         </div>
         <Button type="submit" class="btn btn-primary" onClick={handleSave}>
           Save Journal
