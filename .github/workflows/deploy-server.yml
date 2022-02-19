@@ -16,7 +16,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Embed secrets
         run: |
-          echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENTS
           echo $GOOGLE_APPLICATION_CREDENTIALS_CONTENTS > service-account-file.json
         env:
           GOOGLE_APPLICATION_CREDENTIALS_CONTENTS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS_CONTENTS}}
@@ -24,7 +23,7 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ch22-api" #Must be unique in Heroku
+          heroku_app_name: "ch22-api" # Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           appdir: server
