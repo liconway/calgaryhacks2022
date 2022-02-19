@@ -1,0 +1,4 @@
+#configs
+config.json
+.env
+.venv
