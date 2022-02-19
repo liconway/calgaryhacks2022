@@ -2,3 +2,4 @@
 config.json
 .env
 .venv
+service-account-file.json

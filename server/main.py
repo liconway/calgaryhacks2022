@@ -1,13 +1,14 @@
-from encodings import utf_8
-from sre_parse import CATEGORIES
-from unicodedata import category
 from flask import Flask, request
 from pymongo import MongoClient
 import os
-import json
-from dotenv import dotenv_values
+# import json
+from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
+
+# Load configuration from environment
+load_dotenv()
+config = os.environ
 
 # Instantiates a client
 lang_client = language_v1.LanguageServiceClient()
@@ -22,11 +23,6 @@ features = {
 DB_NAME = "CalgaryHacks2022"
 JOURNAL_ENTRY_COLLECTION = "JournalEntries"
 
-config = {
-    **dotenv_values(".env"),
-    **os.environ,
-}
-
 client = MongoClient(config['MONGO_ADMIN'])
 print(client.server_info())
 
@@ -34,10 +30,9 @@ db = client[DB_NAME]
 journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
 
 app = Flask(__name__)
-
 PORT = 1234
-if 'PORT' in os.environ:
-   PORT = os.environ['PORT']
+if 'PORT' in config:
+   PORT = config['PORT']
 
 
 @app.route("/health", methods=['GET'])
@@ -100,8 +95,9 @@ def handle_entities(entities):
    entity_list.sort(key=lambda c: c.salience, reverse=True)
    entity_list = entity_list[0:3]
 
-   # for entity in entity_list:
-   #    pass
+   for entity in entity_list:
+      print(entity)
+      pass
    return entity_list
 
 
