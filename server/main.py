@@ -65,22 +65,20 @@ def lang_note():
       type_=language_v1.Document.Type.PLAIN_TEXT
    )
 
-   analyzation = lang_client.annotate_text(document=document, features=features)
+   doc_analyzed = lang_client.annotate_text(document=document, features=features)
 
    db_doc = {}
-   db_doc['user'] = "userid123"
+   db_doc['user'] = json_content['userid']
    db_doc['text'] = json_content['text']
-   db_doc['sentiment']  = handle_sentiment(analyzation.document_sentiment)
-   # db_doc['entities']   = handle_entities(analyzation.entities)
-   # db_doc['categories'] = handle_categories(analyzation.categories)
-   # db_doc['sentences']  = handle_sentences(analyzation.sentences)
-   db_doc['language']  = analyzation.language
+   db_doc['sentiment']  = handle_sentiment(doc_analyzed.document_sentiment)
+   db_doc['entities']   = handle_entities(doc_analyzed.entities)
+   db_doc['categories'] = handle_categories(doc_analyzed.categories)
+   db_doc['sentences']  = handle_sentences(doc_analyzed.sentences)
+   db_doc['language']  = doc_analyzed.language
 
    journal_entry_collection.insert_one(db_doc)
 
-   print(db_doc)
-
-   return f"we dit it boooyysss!!!\n"
+   return f"Document successfully added!\n"
 
 
 def handle_sentiment(sentiment):
@@ -95,18 +93,39 @@ def handle_entities(entities):
    entity_list.sort(key=lambda c: c.salience, reverse=True)
    entity_list = entity_list[0:3]
 
+   output = []
    for entity in entity_list:
-      print(entity)
-      pass
-   return entity_list
+      output_i = {}
+      output_i['name'] = entity.name
+      output_i['type'] = entity.type_
+      output_i['salience'] = entity.salience
+      output_i['sentiment'] = {}
+      output_i['sentiment']['score'] = entity.sentiment.score
+      output_i['sentiment']['magnitude'] = entity.sentiment.magnitude
+      output.append(output_i)
+
+   return output
 
 
 def handle_categories(categories):
-   return categories
+   output = []
+   for category in categories:
+      output.append(category)
+
+   return output
 
 
 def handle_sentences(sentences):
-   return sentences
+   output = []
+   for sentence in sentences:
+      output_i = {}
+      output_i['text'] = sentence.text.content
+      output_i['sentiment'] = {}
+      output_i['sentiment']['score'] = sentence.sentiment.score
+      output_i['sentiment']['magnitude'] = sentence.sentiment.magnitude
+      output.append(output_i)
+
+   return output
 
 if __name__ == "__main__":
    app.run(port=PORT)
