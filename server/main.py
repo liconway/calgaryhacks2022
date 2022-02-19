@@ -42,7 +42,7 @@ def health_check():
 
 @app.route("/dewit", methods=['GET'])
 def get_data():
-   content = request.get_json()
+   content = request.args.to_dict()
    print(content)
    data = journal_entry_collection.find(content)
    return f"{data[0]}\n"
