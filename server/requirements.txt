@@ -4,3 +4,4 @@ pymongo[srv]
 gunicorn==20.1.0
 python-dotenv==0.19.2
 dnspython==2.2.0
+google-cloud-language==2.3.2
