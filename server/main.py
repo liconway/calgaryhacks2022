@@ -4,9 +4,13 @@ from unicodedata import category
 from flask import Flask, request
 from pymongo import MongoClient
 import os
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
+
+# Load configuration from environment
+load_dotenv()
+config = os.environ
 
 # Instantiates a client
 lang_client = language_v1.LanguageServiceClient()
@@ -18,11 +22,6 @@ features = {
    'extract_entity_sentiment': True
 }
 
-config = {
-    **dotenv_values(".env"),
-    **os.environ,
-}
-
 client = MongoClient(config['MONGO_ADMIN'])
 print(client.server_info())
 
@@ -30,10 +29,9 @@ db = client["test_db"]
 test_collection = db["test_collection"]
 
 app = Flask(__name__)
-
 PORT = 1234
-if 'PORT' in os.environ:
-   PORT = os.environ['PORT']
+if 'PORT' in config:
+   PORT = config['PORT']
 
 
 @app.route("/health", methods=['GET'])
