@@ -1,4 +1,5 @@
 from flask import Flask, request
+from flask_cors import CORS
 from pymongo import MongoClient
 import os
 # import json
@@ -30,6 +31,9 @@ db = client[DB_NAME]
 journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 PORT = 1234
 if 'PORT' in config:
    PORT = config['PORT']
