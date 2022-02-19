@@ -73,6 +73,7 @@ def lang_note():
 
    db_doc = {}
    db_doc['user'] = json_content['userid']
+   db_doc['title'] = json_content['title']
    db_doc['text'] = json_content['text']
    db_doc['sentiment']  = handle_sentiment(doc_analyzed.document_sentiment)
    db_doc['entities']   = handle_entities(doc_analyzed.entities)
