@@ -28,7 +28,7 @@ jobs:
           usedocker: true
           appdir: server
           healthcheck: "https://ch22-api.herokuapp.com/health"
-          rollbackonhealthcheckfailed: true
+          # rollbackonhealthcheckfailed: true
         env:
           HD_MONGO_ADMIN: ${{secrets.MONGO_ADMIN}}
           HD_MONGO_USER: ${{secrets.MONGO_USER}}
