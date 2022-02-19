@@ -4,6 +4,7 @@ from unicodedata import category
 from flask import Flask, request
 from pymongo import MongoClient
 import os
+import json
 from dotenv import dotenv_values
 # Imports the Google Cloud client library
 from google.cloud import language_v1
@@ -18,6 +19,9 @@ features = {
    'extract_entity_sentiment': True
 }
 
+DB_NAME = "CalgaryHacks2022"
+JOURNAL_ENTRY_COLLECTION = "JournalEntries"
+
 config = {
     **dotenv_values(".env"),
     **os.environ,
@@ -26,8 +30,8 @@ config = {
 client = MongoClient(config['MONGO_ADMIN'])
 print(client.server_info())
 
-db = client["test_db"]
-test_collection = db["test_collection"]
+db = client[DB_NAME]
+journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
 
 app = Flask(__name__)
 
@@ -41,11 +45,11 @@ def health_check():
    return "it worky!\n"
 
 
-@app.route("/user/data", methods=['GET'])
+@app.route("/dewit", methods=['GET'])
 def get_data():
    content = request.get_json()
    print(content)
-   data = test_collection.find(content)
+   data = journal_entry_collection.find(content)
    return f"{data[0]}\n"
 
 
@@ -53,7 +57,7 @@ def get_data():
 def post_data():
    content = request.get_json()
    print(content)
-   test_collection.insert_one(content)
+   journal_entry_collection.insert_one(content)
    return f"Successfully inserted data :)\n"
 
 
@@ -68,18 +72,27 @@ def lang_note():
 
    analyzation = lang_client.annotate_text(document=document, features=features)
 
-   handle_sentiment(analyzation.document_sentiment)
-   handle_entities(analyzation.entities)
-   handle_categories(analyzation.categories)
-   handle_sentences(analyzation.sentences)
-   print(f"Language: {analyzation.language}")
+   db_doc = {}
+   db_doc['user'] = "userid123"
+   db_doc['text'] = json_content['text']
+   db_doc['sentiment']  = handle_sentiment(analyzation.document_sentiment)
+   # db_doc['entities']   = handle_entities(analyzation.entities)
+   # db_doc['categories'] = handle_categories(analyzation.categories)
+   # db_doc['sentences']  = handle_sentences(analyzation.sentences)
+   db_doc['language']  = analyzation.language
+
+   journal_entry_collection.insert_one(db_doc)
+
+   print(db_doc)
 
    return f"we dit it boooyysss!!!\n"
 
 
 def handle_sentiment(sentiment):
-   print(f"Score: {sentiment.score}")
-   print(f"magnitude: {sentiment.magnitude}")
+   output = {}
+   output['score'] = sentiment.score
+   output['magnitude'] = sentiment.magnitude
+   return output
 
 
 def handle_entities(entities):
@@ -87,23 +100,17 @@ def handle_entities(entities):
    entity_list.sort(key=lambda c: c.salience, reverse=True)
    entity_list = entity_list[0:3]
 
-   print("ENTITIES")
-   for entity in entity_list: 
-      print("ENTITY:")
-      print(entity)
+   # for entity in entity_list:
+   #    pass
+   return entity_list
 
 
 def handle_categories(categories):
-   print("CATEGORIES")
-   for category in categories:
-      print("CATEGORY")
-      print(category)
+   return categories
+
 
 def handle_sentences(sentences):
-   print("SENTENCES")
-   for sentence in sentences:
-      print("SENTENCE:")
-      print(sentence)
+   return sentences
 
 if __name__ == "__main__":
    app.run(port=PORT)
