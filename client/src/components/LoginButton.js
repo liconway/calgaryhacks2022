@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 function LoginButton() {
@@ -9,7 +9,7 @@ function LoginButton() {
     const endpoint2 = 'http://localhost:1234/auth/login';
 
     const handleLogin = async (googleData) => {
-        const res = await fetch(endpoint, {
+        const res = await fetch(endpoint2, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify({
@@ -20,9 +20,11 @@ function LoginButton() {
           }
         });
 
-        if (res) {
-            const data = await res.json();
-            console.log(data);
+        if (res.status != 200) {
+            console.log("Sending failed. Please try again.");
+        } else {
+            // Redirect
+            window.location.href = "/journal";
         }
     }
 
