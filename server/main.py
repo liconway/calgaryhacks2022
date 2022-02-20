@@ -60,7 +60,7 @@ def get_journal():
 
    return (journal, 200)
 
-@app.route("/journals", methods=['POST'])
+@app.route("/journal", methods=['POST'])
 def lang_note():
    json_content = request.get_json()
    print(json_content)
