@@ -9,7 +9,7 @@ function LoginButton() {
     const endpoint2 = 'https://localhost:1234/auth/login';
 
     const handleLogin = async (googleData) => {
-        const res = await fetch(endpoint2, {
+        const res = await fetch(endpoint, {
             method: "POST",
             body: JSON.stringify({
             token: googleData.tokenId
