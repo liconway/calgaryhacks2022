@@ -2,13 +2,13 @@ from flask import Flask, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import os
-import pymongo
-# import json
+import json
 from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
 from bson.objectid import ObjectId
 from datetime import datetime
+import random
 
 # Load configuration from environment
 load_dotenv()
@@ -32,6 +32,11 @@ client = MongoClient(config['MONGO_ADMIN'])
 
 db = client[DB_NAME]
 journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
+
+with open('prompt_list.json') as json_file:
+   prompt_list = json.load(json_file)
+
+generic_prompt_list = prompt_list['generic_prompt_list']
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -67,11 +72,11 @@ def get_prompt():
 
    output = {}
    if prompt == "generic":
-      output["output"] = handle_generic_prompt()
+      output["text"] = handle_generic_prompt()
    elif prompt == "entity":
-      output["output"] = handle_entity_prompt()
+      output = handle_entity_prompt()
    elif prompt == "sentence":
-      output["output"] = handle_sentence_prompt()
+      output = handle_sentence_prompt()
    else:
       return ("it brokey", 400)
    
@@ -112,6 +117,7 @@ def lang_note():
 
    mongo_id = journal_entry_collection.insert_one(db_doc)
    return (str(mongo_id.inserted_id), 200)
+   # return ("lmao", 200)
 
 
 def handle_sentiment(sentiment):
@@ -164,6 +170,7 @@ def handle_sentences(sentences):
       output_i['sentiment'] = {}
       output_i['sentiment']['score'] = sentence.sentiment.score
       output_i['sentiment']['magnitude'] = sentence.sentiment.magnitude
+      # print(sentence)
       pos_output.append(output_i)
 
    neg_output = []
@@ -173,26 +180,37 @@ def handle_sentences(sentences):
       output_i['sentiment'] = {}
       output_i['sentiment']['score'] = sentence.sentiment.score
       output_i['sentiment']['magnitude'] = sentence.sentiment.magnitude
+      # print(sentence)
       neg_output.append(output_i)
 
    output = {
       "positive": pos_output,
       "negative": neg_output
    }
-
    return output
 
 def handle_generic_prompt():
-   
-   return "generic"
+   return generic_prompt_list[random.randrange(0, len(generic_prompt_list))]
+
 
 def handle_entity_prompt():
 
    return "entity"
 
-def handle_sentence_prompt():
 
-   return "sentence"
+def handle_sentence_prompt():
+   sentence_list = []
+   for journal in journal_entry_collection.find():
+
+      for positive_sentence in journal['sentences']['positive']:
+         sentence_list.append(positive_sentence)
+
+      for negative_sentence in journal['sentences']['negative']:
+         sentence_list.append(negative_sentence)
+
+   sentence = sentence_list[random.randrange(0, len(sentence_list))]
+
+   return sentence
 
 if __name__ == "__main__":
    app.run(port=PORT)
