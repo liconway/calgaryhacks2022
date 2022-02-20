@@ -54,29 +54,6 @@ const Details = () => {
     }
   };
 
-  function getHighlightedText(highlight) {
-    // Split on highlight term and include term into parts, gnore case
-    const text = journal.text;
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return (
-      <span>
-        {" "}
-        {parts.map((part, i) => (
-          <span
-            key={i}
-            style={
-              part.toLowerCase() === highlight.toLowerCase()
-                ? { fontWeight: "bold", color: "red", backgroundColor: "blue" }
-                : {}
-            }
-          >
-            {part}
-          </span>
-        ))}{" "}
-      </span>
-    );
-  }
-
   //split the text into sentences, each stored into a span
   function splitByPeriod(text) {
     let sentences = text.split(/([.?!])/);
@@ -144,7 +121,7 @@ const Details = () => {
   const listPositives = journal.sentences.positive.map((sentence) => {
     return (
       <div onClick={() => handleClick(sentence.text)}>
-        <Card hoverable style={{ backgroundColor: "green", color: "white" }}>
+        <Card className="sentence-cards" style={{ backgroundColor: "green", color: "white" }}>
           <Card.Body>
             <Card.Text>
               <p>{sentence.text}</p>
@@ -163,7 +140,7 @@ const Details = () => {
   const listNegative = journal.sentences.negative.map((sentence) => {
     return (
       <div onClick={() => handleClick(sentence.text)}>
-        <Card hoverable style={{ backgroundColor: "red", color: "white" }}>
+        <Card className="sentence-cards" style={{ backgroundColor: "red", color: "white" }}>
           <Card.Body>
             <Card.Text>
               <p>{sentence.text}</p>

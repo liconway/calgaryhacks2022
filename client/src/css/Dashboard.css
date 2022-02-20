@@ -19,6 +19,7 @@ body {
 
 .btn {
   transition: 0.3s linear;
+  margin-bottom: 1em;
 }
 
 .btn:hover {
