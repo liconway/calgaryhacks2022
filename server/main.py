@@ -61,6 +61,23 @@ def get_journals():
    return (output_list, 200)
 
 
+@app.route("/prompt", methods=['GET'])
+def get_prompt():
+   prompt = request.args.get('prompt', default="", type=str)
+
+   output = {}
+   if prompt == "generic":
+      output["output"] = handle_generic_prompt()
+   elif prompt == "entity":
+      output["output"] = handle_entity_prompt()
+   elif prompt == "sentence":
+      output["output"] = handle_sentence_prompt()
+   else:
+      return ("it brokey", 400)
+   
+   return (output, 200)
+
+
 @app.route("/journal", methods=['GET'])
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
@@ -164,6 +181,18 @@ def handle_sentences(sentences):
    }
 
    return output
+
+def handle_generic_prompt():
+   
+   return "generic"
+
+def handle_entity_prompt():
+
+   return "entity"
+
+def handle_sentence_prompt():
+
+   return "sentence"
 
 if __name__ == "__main__":
    app.run(port=PORT)
