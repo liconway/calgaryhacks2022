@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 function LoginButton() {
@@ -23,7 +23,8 @@ function LoginButton() {
         if (res.status != 200) {
             console.log("Sending failed. Please try again.");
         } else {
-            // Redirect 
+            // Redirect
+            window.location.href = "/journal";
         }
     }
 

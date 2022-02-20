@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Journal from './components/Journal';
@@ -19,8 +19,8 @@ const App = () => {
                         <Journal />
                     </RequireAuth>
                 } 
-            /> */}
-            {/* <Route 
+            />
+            <Route 
                 path="/details" 
                 element={
                     <RequireAuth>
