@@ -61,16 +61,7 @@ def authenticated(f):
       return f(*args, **kwargs)
    return decorated
 
-def unauthenticated(f):
-   @wraps(f)
-   def decorated(*args, **kwargs):
-      if 'user_id' in session:
-         return {'error': 'Already logged in'}, 401
-      return f(*args, **kwargs)
-   return decorated
-
 @app.route("/auth/login", methods=['POST'])
-@unauthenticated
 def auth():
    response = requests.get(
       GOOGLE_ID_TOKEN_INFO_URL,

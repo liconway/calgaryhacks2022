@@ -6,13 +6,15 @@ function LoginButton() {
 
     const clientId = '518828783452-4vdk5panaua9s8entiv5ljoqvbo7l4j5.apps.googleusercontent.com'
     const endpoint = 'https://ch22-api.herokuapp.com/auth/login';
+    const endpoint2 = 'http://localhost:1234/auth/login';
 
     const handleLogin = async (googleData) => {
         const res = await fetch(endpoint, {
+            credentials: 'include',
             method: "POST",
             body: JSON.stringify({
-            token: googleData.tokenId
-          }),
+                token: googleData.tokenId
+            }),
           headers: {
             "Content-Type": "application/json"
           }
@@ -20,6 +22,7 @@ function LoginButton() {
 
         if (res) {
             const data = await res.json();
+            console.log(data);
         }
     }
 
@@ -34,7 +37,6 @@ function LoginButton() {
             onSuccess={handleLogin}
             onFailure={errorResponseGoogle}
             buttonText="Sign in with Google"
-            isSignedIn={true}
         />
         </div>             
     );

@@ -20,6 +20,8 @@ function Homepage() {
                             <LoginButton />
                         </Card>
                     </Col>
+                </Row>
+                <Row>
                     <Col id="hero">
                         <Image fluid src={sittingImg} />
                     </Col>

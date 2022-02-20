@@ -31,7 +31,9 @@ jobs:
           delay: 5
           rollbackonhealthcheckfailed: true
         env:
+          HD_GOOGLE_APPLICATION_CREDENTIALS: service-account-file.json
+          HD_GOOGLE_CLIENT_ID: ${{secrets.GOOGLE_CLIENT_ID}}
+          HD_GOOGLE_CLIENT_SECRET: ${{secrets.GOOGLE_CLIENT_SECRET}}
           HD_MONGO_ADMIN: ${{secrets.MONGO_ADMIN}}
           HD_MONGO_USER: ${{secrets.MONGO_USER}}
-          HD_GOOGLE_APPLICATION_CREDENTIALS: service-account-file.json
 
