@@ -7,7 +7,7 @@ import logoImg from "../img/logo.png";
 function Navigation() {
   require("../css/Navbar.css");
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
       {/* <Navbar.Brand href="#">Journable</Navbar.Brand> */}
 
       <Navbar.Brand href="#/dashboard">
