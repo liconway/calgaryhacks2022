@@ -52,14 +52,6 @@ def get_data():
    return f"{data[0]}\n"
 
 
-@app.route("/dewit", methods=['POST'])
-def post_data():
-   content = request.get_json()
-   print(content)
-   journal_entry_collection.insert_one(content)
-   return f"Successfully inserted data :)\n"
-
-
 @app.route("/note", methods=['POST'])
 def lang_note():
    json_content = request.get_json()
@@ -96,7 +88,7 @@ def handle_sentiment(sentiment):
 def handle_entities(entities):
    entity_list = list(filter(lambda e: e.salience > 0.01, entities))
    entity_list.sort(key=lambda c: c.salience, reverse=True)
-   entity_list = entity_list[0:3]
+   entity_list = entity_list[0:5]
 
    output = []
    for entity in entity_list:
@@ -121,14 +113,36 @@ def handle_categories(categories):
 
 
 def handle_sentences(sentences):
-   output = []
-   for sentence in sentences:
+   pos_sentence_list = list(filter(lambda e: e.sentiment.score > 0.01, sentences))
+   pos_sentence_list.sort(key=lambda c: c.sentiment.score, reverse=True)
+   pos_sentence_list = pos_sentence_list[0:5]
+
+   neg_sentence_list = list(filter(lambda e: e.sentiment.score < -0.01, sentences))
+   neg_sentence_list.sort(key=lambda c: c.sentiment.score, reverse=False)
+   neg_sentence_list = neg_sentence_list[0:5]
+
+   pos_output = []
+   for sentence in pos_sentence_list:
       output_i = {}
       output_i['text'] = sentence.text.content
       output_i['sentiment'] = {}
       output_i['sentiment']['score'] = sentence.sentiment.score
       output_i['sentiment']['magnitude'] = sentence.sentiment.magnitude
-      output.append(output_i)
+      pos_output.append(output_i)
+
+   neg_output = []
+   for sentence in neg_sentence_list:
+      output_i = {}
+      output_i['text'] = sentence.text.content
+      output_i['sentiment'] = {}
+      output_i['sentiment']['score'] = sentence.sentiment.score
+      output_i['sentiment']['magnitude'] = sentence.sentiment.magnitude
+      neg_output.append(output_i)
+
+   output = {
+      "positive": pos_output,
+      "negative": neg_output
+   }
 
    return output
 
