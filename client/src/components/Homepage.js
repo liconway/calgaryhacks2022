@@ -10,7 +10,6 @@ import sittingImg from '../img/sitting-3.png';
 function Homepage() {
     return (
         <div>
-            <Navigation />
             <Container>
                 <Row>
                     <Col>
