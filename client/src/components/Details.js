@@ -3,8 +3,10 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from './Navigation';
 import img from '../img/wood.png';
+import { useParams } from "react-router-dom";
 
-const Details = (journalID) => {
+const Details = () => {
+  const {journalID} = useParams();
   const [journalTitle, setJournalTitle] = useState("");
   const [journalContent, setJournalContent] = useState("");
   const [positiveSuggestions, setPositiveSuggestions] = useState("");
@@ -29,7 +31,7 @@ const Details = (journalID) => {
     const fetchJournal = async () => {
         console.log(journalID);
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/journal?id=6211fef0860a8748df2ab7a4`,
+        `${process.env.REACT_APP_API_URL}/journal?id=${journalID}`,
         {
           method: "GET",
           credentials: "include",

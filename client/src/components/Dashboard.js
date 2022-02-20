@@ -7,59 +7,51 @@ import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
-  const [journalTitle, setJournalTitle] = useState("");
-  const [journalTimeStamp, setJournalTimeStamp] = useState("");
-    useEffect(() => {
-      const getJournalInfo = async () => {
-        const res = await fetchJournal();
-        setJournalTitle(res.title);
-          setJournalTimeStamp(res.text);
-      };
-      getJournalInfo();
-    }, []);
+  const [journals, setJournals] = useState({
+   "journals": []
+   });
 
-    const fetchJournal = async () => {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/journals`,
-        {
-          method: "GET",
-          credentials: "include"
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-      return data;
-    };
+   useEffect(() => {
+     const getJournalInfo = async () => {
+       const res = await fetchJournal();
+       setJournals(res);
+     };
+     getJournalInfo();
+   }, []);
 
+   const fetchJournal = async () => {
+     const res = await fetch(
+       `${process.env.REACT_APP_API_URL}/journals`,
+       {
+         method: "GET",
+         credentials: "include"
+       }
+     );
+     const data = await res.json();
+     return data;
+   };
+
+  const listJournals = journals['journals'].map(journal => {
+    return (
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Card.Title>{journal.title}</Card.Title>
+          <Card.Text>{journal.content}</Card.Text>
+          <Link to={`/journal/${journal._id}`}>
+            <button className="btn btn-primary">View Journal</button>
+          </Link>
+        </Card.Body>
+      </Card>
+    );
+  });
+
+  
   require("../css/Dashboard.css");
   return (  
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
       <Navigation />
       <Container>
-          <Link to="/#details" style={{ color: 'inherit', textDecoration: 'none' }}>
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              Title
-            </Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Timestamp</small>
-          </Card.Footer>
-        </Card>
-        </Link>
-        <Link to="/#details" style={{ color: 'inherit', textDecoration: 'none' }}>
-        <Card>
-          <Card.Body>
-            <Card.Title>
-              Title
-            </Card.Title>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Timestamp</small>
-          </Card.Footer>
-        </Card>
-        </Link>
+         {listJournals}
       </Container>
     </div>
   );
