@@ -15,37 +15,24 @@ import img from '../img/wood.png';
 const Journal = () => {
   const [titleState, setTitleState] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [journalID, setJournalID] = useState("");
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // useEffect(() => {
-  //   const getJournal = async () => {
-  //     const res = await fetchJournal();
-  //     setTitleState(res);
-  //     setEditorState(res);
-  //   };
-  //   getJournal();
-  // }, []);
 
-  // const fetchJournal = async () => {
-  //   const res = await fetch(
-  //     "https://ch22-api.herokuapp.com/dewit?user=userid123",
-  //     {
-  //       method: "GET",
-  //       credentials: 'include',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   // const data = await res.json();
-  //   const data = await res.text();
-  //   return data;
-  // };
+  const handleSave = async (event) => {
+    event.preventDefault();
 
-  const saveJournal = async (journal) => {
+    var title = titleState;
+    var content = editorState.getCurrentContent().getPlainText("\u0001");
+    var journal = {
+      title: title,
+      text: content,
+    };
+    console.log(journal);
+
     const res = await fetch(`${process.env.REACT_APP_API_URL}/journal`, {
       method: "POST",
       headers: {
@@ -57,21 +44,11 @@ const Journal = () => {
     const data = await res.text();
 
     console.log(data);
+    
+    //return once saved
+    setJournalID(data);
 
-    return data;
-  };
-
-  function handleSave(event) {
-    var title = titleState;
-    var content = editorState.getCurrentContent().getPlainText("\u0001");
-
-    var journal = {
-      title: title,
-      text: content,
-    };
-    console.log(journal);
-    event.preventDefault();
-    saveJournal(journal);
+    window.location.href = '/details/' + data;
 
   }
 
@@ -116,14 +93,11 @@ const Journal = () => {
             onEditorStateChange={setEditorState}
           />
         </div>
-        {/* <Link
-          to="/details" journalID={handleSave}
-        > */}
-          <Button variant="primary" onClick={handleSave}>
+
+          <Button variant="primary" onClick={handleShow}>
             Save Journal
           </Button>
-        {/* </Link> */}
-        {/* <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>Save Journal</Modal.Title>
           </Modal.Header>
@@ -140,7 +114,7 @@ const Journal = () => {
               Save
             </Button>
           </Modal.Footer>
-        </Modal> */}
+        </Modal>
       </Form>
     </div>
     </div>

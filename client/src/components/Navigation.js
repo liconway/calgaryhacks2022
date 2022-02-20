@@ -12,7 +12,7 @@ function Navigation() {
       <Nav><Nav.Link href="/Dashboard">Dashboard</Nav.Link></Nav>
       <Nav className="me-auto"> <Nav.Link href="/Journal">Create a new Journal</Nav.Link></Nav>
       <Nav>
-        <Nav.Link href="/sign-out">Sign out</Nav.Link>
+        <Nav.Link href="/">Sign out</Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
