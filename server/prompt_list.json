@@ -1,0 +1,42 @@
+{
+   "generic_prompt_list": [
+      "Write about your day.",
+      "What values do you consider most important in life (honesty, justice, altruism, loyalty, etc.)? How do your actions align with those values?",
+      "What do you appreciate most about your personality? What aspects do you find harder to accept?",
+      "Explore an opinion or two that you held in the past but have since questioned or changed. What led you to change that opinion?",
+      "List three personal beliefs that you’re willing to reconsider or further explore.",
+      "Finish this sentence: My life would be incomplete without...",
+      "Describe one or two significant life events that helped shape you into who you are today.",
+      "When do you trust yourself most? When do you find it harder to have faith in your instincts?",
+      "What three things would you most like others (loved ones, potential friends and partners, professional acquaintances, etc.) to know about you?",
+      "What difficult thoughts or emotions come up most frequently for you?",
+      "Which emotions do you find hardest to accept (guilt, anger, disappointment, etc.)? How do you handle these emotions?",
+      "Describe a choice you regret. What did you learn from it?",
+      "What parts of daily life cause stress, frustration, or sadness? What can you do to change those experiences?",
+      "Describe your favorite thing to do when feeling low.",
+      "What three ordinary things bring you the most joy?",
+      "How do you prioritize self-care?",
+      "Describe two or three things you do to relax.",
+      "What aspects of your life are you most grateful for?",
+      "What are your favorite hobbies? Why?",
+      "What parts of life surprised you most? What turned out the way you expected it would?",
+      "What do you look forward to most in the future?",
+      "What helps you stay focused and motivated when you feel discouraged?",
+      "What do you most want to accomplish in life?",
+      "What do you value most in relationships (trust, respect, sense of humor, etc.)?",
+      "What does love mean to you? How do you recognize it in a relationship?",
+      "List three things you’d like to tell a friend, family member, or partner.",
+      "What are your career ambitions?",
+      "Does your work drain or overwhelm you? Why? Is this something you can change?"
+   ],
+   "positive_sentence_pre_text": [
+      "Would you like to elaborate on this?",
+      "That's great! Want to talk more about it?"
+   ],
+   "neutral_sentence_pre_text": [
+      "Would you like to elaborate on this?"
+   ],
+   "negative_sentence_pre_text": [
+      "Would you like to elaborate on this?"
+   ]
+}
