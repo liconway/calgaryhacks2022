@@ -249,7 +249,13 @@ def handle_generic_prompt():
 
 
 def handle_entity_prompt():
+   entity_list = []
+   for journal in journal_entry_collection.find():
 
+      for entity in journal['entities']:
+         entity_list.append(entity)
+
+   entity = entity_list[random.randrange(0, len(entity_list))]
    return "entity"
 
 
