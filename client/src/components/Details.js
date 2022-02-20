@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from './Navigation';
+import img from '../img/wood.png';
 
 const Details = (journalID) => {
   const [journalTitle, setJournalTitle] = useState("");
@@ -40,7 +41,7 @@ const Details = (journalID) => {
 
   require("../css/Details.css");
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
     <Navigation />
     <div class="d-flex justify-content-center main-div">
       <Container>

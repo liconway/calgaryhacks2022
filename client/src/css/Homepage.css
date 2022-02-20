@@ -1,34 +1,30 @@
-.container {
-    background-color: aliceblue;
-    margin-top: 5%;
-    margin-bottom: 10%;
+body {
+    height: 100%;
 }
 
-#homepage {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#sign-in {
+.landing-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    text-align: center;
+    justify-content: space-evenly;
+    position: absolute;
+    margin: 30px;
+    top: 100px;
+    width: 100%;
 }
 
-#sign-in > * {
-    margin-bottom: 2rem;
-}
-
-.card-body, #hero {
+.landing-page-flex {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    justify-content: space-evenly;
 }
 
-#hero img {
-    max-width: 50%;
+.landing-page .landing-description {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 2rem;
+    margin-right: 4rem;
 }
 
+.landing-page__header {
+    font-size: 3.3rem;
+    padding-bottom: 1.5rem;
+    /* color: #ac6661; */
+}

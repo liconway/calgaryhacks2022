@@ -12,6 +12,7 @@ const App = () => {
             <Route path="/" element={<Homepage/>} />
             <Route path="/journal" element={<Journal />} />
             <Route path="/details" element={<Details />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             {/* <Route 
                 path="/journal" 
                 element={
@@ -19,7 +20,7 @@ const App = () => {
                         <Journal />
                     </RequireAuth>
                 } 
-            />
+            />g
             <Route 
                 path="/details" 
                 element={

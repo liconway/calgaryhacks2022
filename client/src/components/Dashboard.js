@@ -2,45 +2,36 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from "./Navigation";
+import img from "../img/wood.png";
 
 const Dashboard = () => {
-//   const [journalTitle, setJournalTitle] = useState("");
-//   const [journalContent, setJournalContent] = useState("");
-//   const [positiveSuggestions, setPositiveSuggestions] = useState("");
-//   const [negativeSuggestions, setNegativeSuggestions] = useState("");
+  const [journalTitle, setJournalTitle] = useState("");
+  const [journalTimeStamp, setJournalTimeStamp] = useState("");
+    useEffect(() => {
+      const getJournalInfo = async () => {
+        const res = await fetchJournal();
+        setJournalTitle(res.title);
+          setJournalTimeStamp(res.text);
+      };
+      getJournalInfo();
+    }, []);
 
-//     useEffect(() => {
-//       const getJournalInfo = async () => {
-//         const res = await fetchJournal();
-//         setJournalTitle(res.title);
-//           setJournalContent(res.text);
-//           setPositiveSuggestions(res.positive);
-//           setNegativeSuggestions(res.negative);
-
-//       };
-//       getJournalInfo();
-//     }, []);
-
-//     const fetchJournal = async () => {
-//         console.log(journalID);
-//       const res = await fetch(
-//         "http://localhost:1234/journal?id=6211cf1c9706cc89e451a0c2",
-//         {
-//           method: "GET",
-//           credentials: "include",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-//       const data = await res.json();
-//       console.log(data);
-//       return data;
-//     };
+    const fetchJournal = async () => {
+      const res = await fetch(
+        "http://localhost:1234/journals",
+        {
+          method: "GET",
+          credentials: "include"
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      return data;
+    };
 
   require("../css/Dashboard.css");
   return (  
-    <div>
+    <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
       <Navigation />
       <Container>
         <Card>

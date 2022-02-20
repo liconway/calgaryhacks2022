@@ -11,23 +11,15 @@ import Image from 'react-bootstrap/Image'
 function Homepage() {
     require("../css/Homepage.css");
     return (
-        <div id="homepage">
-            <Container>
-                <Row>
-                    <Col id="sign-in">
-                        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit </h1>
-                        <h4>consectetur adipiscing elit </h4>
-                        <Card body>
-                            <LoginButton />
-                        </Card>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col id="hero">
-                        <Image fluid src={sittingImg} />
-                    </Col>
-                </Row>
-            </Container>
+        <div class="landing-page">
+            <div class="landing-page-flex">
+                <div class="landing-description">
+                    <h1 class="landing-page__header">Journable</h1>
+                    <h4 class="landing-page__description">Helping you to journal</h4>
+                    <LoginButton />
+                </div>
+                <img src={sittingImg} alt="this is gaming!" />
+            </div>
         </div>
     );
 }

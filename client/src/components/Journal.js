@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
 
 import Navigation from './Navigation';
+import img from '../img/wood.png';
 
 const Journal = () => {
   const [titleState, setTitleState] = useState("");
@@ -84,7 +85,7 @@ const Journal = () => {
   }
 
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
     <Navigation />
     <div
       class="container"
