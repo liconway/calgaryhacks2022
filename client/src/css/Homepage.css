@@ -10,13 +10,17 @@
     text-align: center;
 }
 
-.card-body {
+#sign-in > * {
+    margin-bottom: 2rem;
+}
+
+.card-body, #hero {
     display: flex;
     justify-content: center;
     align-content: center;
 }
 
-#hero {
-    display: flex;
-    justify-content: flex-end;
+#hero img {
+    max-width: 50%;
 }
+
