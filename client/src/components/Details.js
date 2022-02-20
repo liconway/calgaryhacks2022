@@ -13,19 +13,23 @@ const Details = (journalID) => {
     useEffect(() => {
       const getJournalInfo = async () => {
         const res = await fetchJournal();
-        setJournalTitle(res.title);
-          setJournalContent(res.text);
-          setPositiveSuggestions(res.positive);
-          setNegativeSuggestions(res.negative);
+        if (res != null) {
+            setJournalTitle(res.title);
+            setJournalContent(res.text);
+            setPositiveSuggestions(res.sentences);
+            setNegativeSuggestions(res.sentences);
+        }
+
 
       };
       getJournalInfo();
     }, []);
+    
 
     const fetchJournal = async () => {
         console.log(journalID);
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/journal?id=6211cf1c9706cc89e451a0c2`,
+        `${process.env.REACT_APP_API_URL}/journal?id=6211fef0860a8748df2ab7a4`,
         {
           method: "GET",
           credentials: "include",
@@ -34,9 +38,14 @@ const Details = (journalID) => {
           },
         }
       );
-      const data = await res.json();
-      console.log(data);
-      return data;
+      if (res.status == 200) {
+        const data = await res.json();
+        console.log(data);
+        return data;
+      } else {
+          return null;
+      }
+      
     };
 
   require("../css/Details.css");
@@ -45,16 +54,15 @@ const Details = (journalID) => {
     <Navigation />
     <div class="d-flex justify-content-center main-div">
       <Container>
-        <h1>Journal</h1>
+        <h1>{journalTitle}</h1>
+        <p>journalContent</p>
       </Container>
 
       <Container fluid>
         <Card>
           <Card.Body>
             <Card.Text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
+            dfgdfgdfg
             </Card.Text>
           </Card.Body>
           <Card.Footer>
