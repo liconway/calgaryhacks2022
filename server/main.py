@@ -46,13 +46,6 @@ def health_check():
    return ("it worky!\n", 200)
 
 
-@app.route("/dewit", methods=['GET'])
-def get_data():
-   content = request.args.to_dict()
-   print(content)
-   data = journal_entry_collection.find(content)
-   return f"{data[0]}\n"
-
 @app.route("/journals", methods=['GET'])
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
