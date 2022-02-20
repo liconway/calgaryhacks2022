@@ -1,0 +1,15 @@
+.entity-group{
+   float: left;
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-top: 30px;
+}
+
+.container {
+   float: left;
+   margin-left: 20px;
+}
+
+.card {
+   margin-bottom: 20px;
+}
