@@ -30,11 +30,11 @@ features = {
 DB_NAME = "CalgaryHacks2022"
 JOURNAL_ENTRY_COLLECTION = "JournalEntries"
 GOOGLE_ID_TOKEN_INFO_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo"
+user_id_str = ""
 
 client = MongoClient(config['MONGO_ADMIN'])
 
 db = client[DB_NAME]
-journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
 
 with open('prompt_list.json') as json_file:
    prompt_list = json.load(json_file)
@@ -107,7 +107,7 @@ def health_check():
 def get_journals():
    output_list = {}
    output_list['journals'] = []
-   for journal in journal_entry_collection.find():
+   for journal in db[session['user_id']].find():
       output = {}
       output['title'] = journal['title']
       output['time_created'] = journal['time_created']
@@ -139,7 +139,7 @@ def get_prompt():
 @authenticated
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
-   journal = journal_entry_collection.find({
+   journal = db[session['user_id']].find({
       "_id": ObjectId(journal_id)
    })
    journal = journal[0]
@@ -160,7 +160,6 @@ def lang_note():
    doc_analyzed = lang_client.annotate_text(document=document, features=features)
 
    db_doc = {}
-   db_doc['user'] = json_content['userid']
    db_doc['title'] = json_content['title']
    db_doc['text'] = json_content['text']
    db_doc['time_created'] = int(datetime.utcnow().timestamp())
@@ -168,9 +167,9 @@ def lang_note():
    db_doc['entities']   = handle_entities(doc_analyzed.entities)
    db_doc['categories'] = handle_categories(doc_analyzed.categories)
    db_doc['sentences']  = handle_sentences(doc_analyzed.sentences)
-   db_doc['language']  = doc_analyzed.language
+   db_doc['language']   = doc_analyzed.language
 
-   mongo_id = journal_entry_collection.insert_one(db_doc)
+   mongo_id = db[session['user_id']].insert_one(db_doc)
    return (str(mongo_id.inserted_id), 200)
    # return ("lmao", 200)
 
@@ -191,7 +190,7 @@ def handle_entities(entities):
    for entity in entity_list:
       output_i = {}
       output_i['name'] = entity.name
-      output_i['type'] = entity.type_
+      output_i['type'] = entity.type_.name
       output_i['salience'] = entity.salience
       output_i['sentiment'] = {}
       output_i['sentiment']['score'] = entity.sentiment.score
@@ -250,18 +249,18 @@ def handle_generic_prompt():
 
 def handle_entity_prompt():
    entity_list = []
-   for journal in journal_entry_collection.find():
+   for journal in db[session['user_id']].find():
 
       for entity in journal['entities']:
          entity_list.append(entity)
 
    entity = entity_list[random.randrange(0, len(entity_list))]
-   return "entity"
+   return entity
 
 
 def handle_sentence_prompt():
    sentence_list = []
-   for journal in journal_entry_collection.find():
+   for journal in db[session['user_id']].find():
 
       for positive_sentence in journal['sentences']['positive']:
          sentence_list.append(positive_sentence)
