@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import Card from 'react-bootstrap/Card'
-import RefreshIcon from '@mui/icons-material/Refresh';
 
 const Prompt = (props) => {
     const promptType = props.promptType;
@@ -42,7 +41,7 @@ const Prompt = (props) => {
                 <Card.Text>{prompt.text}</Card.Text>
                 <Card.Text>{prompt.name}</Card.Text>
             </Card.Body>
-            <RefreshIcon onClick={getPrompt} ></RefreshIcon>
+            <button className="btn btn-primary" onClick={getPrompt} >Refresh </button>
         </Card>
     );
 
