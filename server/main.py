@@ -212,12 +212,12 @@ def handle_sentences(sentences):
     pos_sentence_list = list(
         filter(lambda e: e.sentiment.score > 0.01, sentences))
     pos_sentence_list.sort(key=lambda c: c.sentiment.score, reverse=True)
-    pos_sentence_list = pos_sentence_list[0:5]
+    pos_sentence_list = pos_sentence_list[0:3]
 
     neg_sentence_list = list(
         filter(lambda e: e.sentiment.score < -0.01, sentences))
     neg_sentence_list.sort(key=lambda c: c.sentiment.score, reverse=False)
-    neg_sentence_list = neg_sentence_list[0:5]
+    neg_sentence_list = neg_sentence_list[0:3]
 
     pos_output = []
     for sentence in pos_sentence_list:
