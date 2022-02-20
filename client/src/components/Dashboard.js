@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     const fetchJournal = async () => {
       const res = await fetch(
-        "http://localhost:1234/journals",
+        `${process.env.REACT_APP_API_URL}/journals`,
         {
           method: "GET",
           credentials: "include"
@@ -36,7 +36,7 @@ const Dashboard = () => {
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
       <Navigation />
       <Container>
-          <Link to="/details" style={{ color: 'inherit', textDecoration: 'none' }}>
+          <Link to="/#details" style={{ color: 'inherit', textDecoration: 'none' }}>
         <Card>
           <Card.Body>
             <Card.Title>
@@ -48,7 +48,7 @@ const Dashboard = () => {
           </Card.Footer>
         </Card>
         </Link>
-        <Link to="/details" style={{ color: 'inherit', textDecoration: 'none' }}>
+        <Link to="/#details" style={{ color: 'inherit', textDecoration: 'none' }}>
         <Card>
           <Card.Body>
             <Card.Title>
