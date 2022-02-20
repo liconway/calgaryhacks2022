@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 import { GoogleLogin } from 'react-google-login';
 
-function LoginButton() {
+function LoginButton(props) {
 
     const clientId = '518828783452-4vdk5panaua9s8entiv5ljoqvbo7l4j5.apps.googleusercontent.com'
     const endpoint = 'https://ch22-api.herokuapp.com/auth/login';
     const endpoint2 = 'http://localhost:1234/auth/login';
 
     const handleLogin = async (googleData) => {
-        const res = await fetch(endpoint, {
+        const res = await fetch(endpoint2, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify({
@@ -20,9 +20,11 @@ function LoginButton() {
           }
         });
 
-        if (res) {
-            const data = await res.json();
-            console.log(data);
+        if (res.status != 200) {
+            console.log("Sending failed. Please try again.");
+        } else {
+            // Redirect 
+            props.setLoggedIn(true);
         }
     }
 

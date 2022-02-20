@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image'
 import '../css/Homepage.css';
 
-function Homepage() {
+function Homepage(props) {
     return (
         <div>
             <Container>
@@ -17,7 +17,7 @@ function Homepage() {
                         <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit </h1>
                         <h4>consectetur adipiscing elit </h4>
                         <Card body>
-                            <LoginButton />
+                            <LoginButton setLoggedIn={props.setLoggedIn}/>
                         </Card>
                     </Col>
                 </Row>
