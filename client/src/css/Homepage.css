@@ -4,6 +4,12 @@
     margin-bottom: 10%;
 }
 
+#homepage {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #sign-in {
     display: flex;
     flex-direction: column;
