@@ -7,6 +7,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-bootstrap/Modal";
+import { Link } from 'react-router-dom';
 
 const Journal = () => {
   const [titleState, setTitleState] = useState("");
@@ -30,6 +31,7 @@ const Journal = () => {
   //     "https://ch22-api.herokuapp.com/dewit?user=userid123",
   //     {
   //       method: "GET",
+  //       credentials: 'include',
   //       headers: {
   //         "Content-Type": "application/json",
   //       },
@@ -41,14 +43,17 @@ const Journal = () => {
   // };
 
   const saveJournal = async (journal) => {
-    const res = await fetch("https://ch22-api.herokuapp.com/note", {
+    const res = await fetch("http://localhost:1234/journal", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(journal),
     });
     const data = await res.text();
+
+    console.log(data);
 
     return data;
   };
@@ -58,18 +63,12 @@ const Journal = () => {
     var content = editorState.getCurrentContent().getPlainText("\u0001");
 
     var journal = {
-      userid: "userid321",
       title: title,
       text: content,
     };
     console.log(journal);
     event.preventDefault();
     saveJournal(journal);
-
-    console.log("Redirecting to details");
-
-    //redirect to Details page
-    window.location.href = "/details";
   }
 
   function validateText() {
@@ -111,11 +110,14 @@ const Journal = () => {
             onEditorStateChange={setEditorState}
           />
         </div>
-        <Button variant="primary" onClick={handleShow}>
-          Save Journal
-        </Button>
-
-        <Modal show={show} onHide={handleClose} animation={false}>
+        {/* <Link
+          to="/details" journalID={handleSave}
+        > */}
+          <Button variant="primary" onClick={handleSave}>
+            Save Journal
+          </Button>
+        {/* </Link> */}
+        {/* <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header closeButton>
             <Modal.Title>Save Journal</Modal.Title>
           </Modal.Header>
@@ -124,11 +126,15 @@ const Journal = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleSave} disabled={!validateText}>
+            <Button
+              variant="primary"
+              onClick={handleSave}
+              disabled={!validateText}
+            >
               Save
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </Form>
     </div>
   );

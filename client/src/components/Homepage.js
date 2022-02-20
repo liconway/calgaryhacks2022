@@ -6,9 +6,10 @@ import LoginButton from './LoginButton';
 import sittingImg from '../img/sitting-3.png';
 import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image'
-import '../css/Homepage.css';
+// import '../css/Homepage.css';
 
 function Homepage() {
+    require("../css/Homepage.css");
     return (
         <div>
             <Container>
