@@ -63,6 +63,11 @@ def authenticated(f):
       return f(*args, **kwargs)
    return decorated
 
+@app.route('/auth', methods=['GET'])
+@authenticated
+def auth():
+   return {'success': True}, 200
+
 @app.route("/auth/login", methods=['POST'])
 def auth():
    response = requests.get(
