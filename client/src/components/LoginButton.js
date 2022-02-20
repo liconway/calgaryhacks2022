@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { GoogleLogin } from 'react-google-login';
 
-function LoginButton(props) {
+function LoginButton() {
 
     const clientId = '518828783452-4vdk5panaua9s8entiv5ljoqvbo7l4j5.apps.googleusercontent.com'
     const endpoint = 'https://ch22-api.herokuapp.com/auth/login';
@@ -24,7 +24,6 @@ function LoginButton(props) {
             console.log("Sending failed. Please try again.");
         } else {
             // Redirect 
-            props.setLoggedIn(true);
         }
     }
 
