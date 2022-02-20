@@ -71,7 +71,7 @@ def auth():
    return {'success': True}, 200
 
 @app.route("/auth/login", methods=['POST'])
-def auth():
+def login():
     response = requests.get(
         GOOGLE_ID_TOKEN_INFO_URL,
         params={'id_token': request.json['token']}
