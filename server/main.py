@@ -41,7 +41,7 @@ app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
 if 'FLASK_SECRET_KEY' in config:
    app.config['SECRET_KEY'] = config['FLASK_SECRET_KEY']
 
-cors = CORS(app)
+cors = CORS(app, supports_credentials=True)
 
 PORT = 1234
 if 'PORT' in config:
