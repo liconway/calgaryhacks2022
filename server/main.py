@@ -175,7 +175,6 @@ def lang_note():
 
    mongo_id = db[session['user_id']].insert_one(db_doc)
    return (str(mongo_id.inserted_id), 200)
-   # return ("lmao", 200)
 
 
 def handle_sentiment(sentiment):
@@ -283,6 +282,7 @@ def handle_sentence_prompt():
 
    sentence['pre_text'] = prompt_list[prompt_str][random.randrange(0, len(prompt_list[prompt_str]))]
    return sentence
+
 
 if __name__ == "__main__":
    app.run(port=PORT)

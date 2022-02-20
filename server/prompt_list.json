@@ -31,13 +31,18 @@
    ],
    "positive_sentence_pretext": [
       "Would you like to elaborate on this point?",
-      "That's great! Want to talk more about it?"
+      "That's great! Want to talk more about it?",
+      "Awesome! Wanna go into further detail?"
    ],
    "neutral_sentence_pretext": [
-      "Would you like to elaborate on this?"
+      "Would you like to elaborate on this?",
+      "Would you like to go more in depth about this?",
+      "Would you like to go into further detail about this?"
    ],
    "negative_sentence_pretext": [
-      "Would you like to talk more about this?"
+      "Would you like to talk more about this?",
+      "Would you like to go more in depth about this?",
+      "That's unfortunate. Would you like to go talk more about this?" 
    ],
    "entity_pretext": [
       "Try talking more about this.",
