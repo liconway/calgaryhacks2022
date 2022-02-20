@@ -72,7 +72,7 @@ const Journal = () => {
         <Card.Body>
           <Card.Text>{currPrompt.pre_text}</Card.Text>
         </Card.Body>
-      </Card>
+        </Card>
       )
   })
 
