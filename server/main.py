@@ -28,7 +28,7 @@ DB_NAME = "CalgaryHacks2022"
 JOURNAL_ENTRY_COLLECTION = "JournalEntries"
 
 client = MongoClient(config['MONGO_ADMIN'])
-print(client.server_info())
+# print(client.server_info())
 
 db = client[DB_NAME]
 journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
@@ -47,11 +47,23 @@ def health_check():
    return ("it worky!\n", 200)
 
 
+@app.route("/journals", methods=['GET'])
+def get_journals():
+   output_list = {}
+   output_list['journals'] = []
+   for journal in journal_entry_collection.find():
+      output = {}
+      output['title'] = journal['title']
+      output['time_created'] = journal['time_created']
+      output['_id'] = str(journal['_id'])
+      output_list['journals'].append(output)
+
+   return (output_list, 200)
+
+
 @app.route("/journal", methods=['GET'])
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
-   print(journal_id)
-   print(ObjectId(journal_id))
    journal = journal_entry_collection.find({
       "_id": ObjectId(journal_id)
    })
@@ -63,7 +75,6 @@ def get_journal():
 @app.route("/journal", methods=['POST'])
 def lang_note():
    json_content = request.get_json()
-   print(json_content)
    document = language_v1.Document(
       content=json_content['text'],
       type_=language_v1.Document.Type.PLAIN_TEXT
