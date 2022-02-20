@@ -19,7 +19,6 @@ function LoginButton() {
         });
         
         const data = await res.json();
-        console.log(data);
     }
 
     const errorResponseGoogle = (response) => {
@@ -28,16 +27,14 @@ function LoginButton() {
     
     return (   
         <div>
-            {counter}
         <GoogleLogin
             clientId={clientId}  // your Google app client ID
-            onSuccess={responseGoogle}
+            onSuccess={handleLogin}
             onFailure={errorResponseGoogle}
             buttonText="Sign in with Google"
             isSignedIn={true}
         />
         </div>             
-
     );
 }
 
