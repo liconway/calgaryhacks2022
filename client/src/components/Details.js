@@ -178,9 +178,6 @@ const Details = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         height: "100vh",
       }}

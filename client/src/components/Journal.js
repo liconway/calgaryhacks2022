@@ -113,7 +113,7 @@ const Journal = () => {
 
   require("../css/Journal.css");
   return (
-    <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
+    <div>
     <Navigation />
     <div
       class="container"
