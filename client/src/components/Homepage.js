@@ -19,7 +19,7 @@ function Homepage() {
                     <LoginButton />
                 </div>
 
-                <img src={sittingImg} alt="this is gaming!" style={{"width":"100%", "height":"auto"}}/>
+                <img src={sittingImg} alt="this is gaming!" style={{"height":"auto"}}/>
             </div>
         </div>
     );

@@ -13,13 +13,13 @@ body {
 .landing-page-flex {
     display: flex;
     justify-content: space-evenly;
+    width: 100vw;
 }
 
 .landing-page .landing-description {
     margin-top: auto;
     margin-bottom: auto;
     padding-bottom: 2rem;
-    width: 100%;
 }
 
 .landing-page__header {
