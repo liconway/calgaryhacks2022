@@ -69,13 +69,34 @@ const Details = () => {
 
   //split the text into sentences, each stored into a span
   function splitByPeriod (text) {
-    let sentences = text.split(/[.?!]/);
-    return sentences.map((sentence, i) => {
-      //return sentences.length > 0 ? <span key={i}>{sentence + '.'}</span> : <span key={i}>{sentence}</span> ;
-      return <span key={i}>{sentence + '.'}</span>;
+    let sentences = text.split(/([.?!])/);
+    sentences = Array.from({length: Math.ceil(sentences.length/2)}, (_,i)=>sentences[2*i]+((2*i+1)<sentences.length ? sentences[2*i+1] : ''))
+    return sentences.map((sentence) => {
+      return findText(sentence);
+      //return <span>{sentence}</span>;
     });
   }
  
+  function findText (text) {
+    //check if the text is in the positive or negative array
+    let positive = journal.sentences.positive.map((sentence) => {
+      return sentence.text;
+    }).includes(text.trim());
+    let negative = journal.sentences.negative.map((sentence) => {
+      return sentence.text;
+    }).includes(text.trim());
+
+    if (positive) {
+      return <span style={{color: 'green'}}>{text}</span>;
+    }
+    else if (negative) {
+      return <span style={{color: 'red'}}>{text}</span>;
+    }
+    else {
+      return <span>{text}</span>;
+    }
+
+  }
 
     const listPositives = journal.sentences.positive.map(sentence => {
     return (
@@ -118,13 +139,12 @@ const Details = () => {
     );
   });
 
-
   return (
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
     <Navigation />
     <div class="d-flex justify-content-center main-div" style={{whiteSpace: "pre-wrap"}}>
       <Container className="bodyContainer">
-        <h1>{journal.title}</h1>
+        <h1 style={{"marginBottom": "5%"}}>{journal.title}</h1>
         <p>{splitByPeriod(journal.text)}</p>
       </Container>
 
@@ -132,41 +152,6 @@ const Details = () => {
         {listPositives}
         {listNegative}
         </Container>
-        {/* <Card>
-          <Card.Body>
-            <Card.Text>
-            dfgdfgdfg
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-        <Card>
-          <Card.Body>
-            <Card.Text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card>
-        <Card>
-          <Card.Body>
-            <Card.Text>
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer>
-            <small className="text-muted">Last updated 3 mins ago</small>
-          </Card.Footer>
-        </Card> */}
-      
     </div>
     </div>
   );

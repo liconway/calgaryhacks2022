@@ -4,12 +4,12 @@
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: 700px;
+  height: 900px;
   min-height: 600px;
   align-self: center;
   margin: 2rem;
   background-color: white;
-
+  flex-wrap: wrap;
 }
 
 .main-div{
