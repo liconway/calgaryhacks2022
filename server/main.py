@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
 from bson.objectid import ObjectId
+from datetime import datetime
 
 # Load configuration from environment
 load_dotenv()
@@ -46,7 +47,7 @@ def health_check():
    return ("it worky!\n", 200)
 
 
-@app.route("/journals", methods=['GET'])
+@app.route("/journal", methods=['GET'])
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
    print(journal_id)
@@ -74,6 +75,7 @@ def lang_note():
    db_doc['user'] = json_content['userid']
    db_doc['title'] = json_content['title']
    db_doc['text'] = json_content['text']
+   db_doc['time_created'] = int(datetime.utcnow().timestamp())
    db_doc['sentiment']  = handle_sentiment(doc_analyzed.document_sentiment)
    db_doc['entities']   = handle_entities(doc_analyzed.entities)
    db_doc['categories'] = handle_categories(doc_analyzed.categories)
