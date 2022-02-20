@@ -1,14 +1,17 @@
-from flask import Flask, request
-from flask_cors import CORS
-from pymongo import MongoClient
 import os
 import json
 from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
 from bson.objectid import ObjectId
-from datetime import datetime
 import random
+import requests
+import secrets
+from datetime import datetime
+from flask import Flask, request, session
+from flask_cors import CORS
+from functools import wraps
+from pymongo import MongoClient
 
 # Load configuration from environment
 load_dotenv()
@@ -26,9 +29,9 @@ features = {
 
 DB_NAME = "CalgaryHacks2022"
 JOURNAL_ENTRY_COLLECTION = "JournalEntries"
+GOOGLE_ID_TOKEN_INFO_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo"
 
 client = MongoClient(config['MONGO_ADMIN'])
-# print(client.server_info())
 
 db = client[DB_NAME]
 journal_entry_collection = db[JOURNAL_ENTRY_COLLECTION]
@@ -39,12 +42,59 @@ with open('prompt_list.json') as json_file:
 generic_prompt_list = prompt_list['generic_prompt_list']
 
 app = Flask(__name__)
-cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
+if 'FLASK_SECRET_KEY' in config:
+   app.config['SECRET_KEY'] = config['FLASK_SECRET_KEY']
+
+cors = CORS(app)
 
 PORT = 1234
 if 'PORT' in config:
    PORT = config['PORT']
+
+def authenticated(f):
+   @wraps(f)
+   def decorated(*args, **kwargs):
+      if 'user_id' not in session:
+         return {'error': 'Not logged in'}, 401
+      return f(*args, **kwargs)
+   return decorated
+
+def unauthenticated(f):
+   @wraps(f)
+   def decorated(*args, **kwargs):
+      if 'user_id' in session:
+         return {'error': 'Already logged in'}, 401
+      return f(*args, **kwargs)
+   return decorated
+
+@app.route("/auth/login", methods=['POST'])
+@unauthenticated
+def auth():
+   response = requests.get(
+      GOOGLE_ID_TOKEN_INFO_URL,
+      params={'id_token': request.json['token']}
+   )
+
+   if not response.ok:
+      return response.json(), response.status_code
+
+   audience = response.json()['aud']
+   if audience != config['GOOGLE_CLIENT_ID']:
+      return {'error': 'Invalid audience'}, 401
+
+   session['user_id'] = response.json()['sub']
+   session['user_name'] = response.json()['given_name']
+
+   return "", 200
+
+
+@app.route("/auth/logout", methods=['POST'])
+@authenticated
+def logout():
+   session.clear()
+   return "", 200
 
 
 @app.route("/health", methods=['GET'])
@@ -53,6 +103,7 @@ def health_check():
 
 
 @app.route("/journals", methods=['GET'])
+@authenticated
 def get_journals():
    output_list = {}
    output_list['journals'] = []
@@ -67,6 +118,7 @@ def get_journals():
 
 
 @app.route("/prompt", methods=['GET'])
+@authenticated
 def get_prompt():
    prompt = request.args.get('prompt', default="", type=str)
 
@@ -84,6 +136,7 @@ def get_prompt():
 
 
 @app.route("/journal", methods=['GET'])
+@authenticated
 def get_journal():
    journal_id = request.args.get('id', default="", type=str)
    journal = journal_entry_collection.find({
@@ -94,7 +147,9 @@ def get_journal():
 
    return (journal, 200)
 
+
 @app.route("/journal", methods=['POST'])
+@authenticated
 def lang_note():
    json_content = request.get_json()
    document = language_v1.Document(

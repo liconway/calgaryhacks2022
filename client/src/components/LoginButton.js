@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 function LoginButton() {
 
     const clientId = '518828783452-4vdk5panaua9s8entiv5ljoqvbo7l4j5.apps.googleusercontent.com'
-    const endpoint = 'http://localhost:3000/post/auth';
+    const endpoint = 'http://localhost:3000/auth/login';
 
     const handleLogin = async (googleData) => {
         const res = await fetch(endpoint, {
@@ -17,8 +17,10 @@ function LoginButton() {
             "Content-Type": "application/json"
           }
         });
-        
-        const data = await res.json();
+
+        if (res) {
+            const data = await res.json();
+        }
     }
 
     const errorResponseGoogle = (response) => {
