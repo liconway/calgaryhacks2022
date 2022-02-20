@@ -7,7 +7,6 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-bootstrap/Modal";
-import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card'
 
 import Navigation from './Navigation';
@@ -19,8 +18,6 @@ const Journal = () => {
   const [journalID, setJournalID] = useState("");
   const [show, setShow] = useState(false);
   const [promptList, setPromptList] = useState([
-    {},
-    {},
     {},
     {},
     {}
