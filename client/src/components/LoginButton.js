@@ -17,8 +17,10 @@ function LoginButton() {
             "Content-Type": "application/json"
           }
         });
-        
-        const data = await res.json();
+
+        if (res) {
+            const data = await res.json();
+        }
     }
 
     const errorResponseGoogle = (response) => {
