@@ -25,7 +25,7 @@ const Details = (journalID) => {
     const fetchJournal = async () => {
         console.log(journalID);
       const res = await fetch(
-        `${process.env.API_URL}/journal?id=6211cf1c9706cc89e451a0c2`,
+        `${process.env.REACT_APP_API_URL}/journal?id=6211cf1c9706cc89e451a0c2`,
         {
           method: "GET",
           credentials: "include",

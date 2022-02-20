@@ -46,7 +46,7 @@ const Journal = () => {
   // };
 
   const saveJournal = async (journal) => {
-    const res = await fetch(`${process.env.API_URL}/journal`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/journal`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

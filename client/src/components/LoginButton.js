@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 function LoginButton() {
 
     const handleLogin = async (googleData) => {
-        const res = await fetch(`${process.env.API_URL}/auth/login`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify({
@@ -32,7 +32,7 @@ function LoginButton() {
     return (
         <div>
         <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID}  // your Google app client ID
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}  // your Google app client ID
             onSuccess={handleLogin}
             onFailure={errorResponseGoogle}
             buttonText="Sign in with Google"

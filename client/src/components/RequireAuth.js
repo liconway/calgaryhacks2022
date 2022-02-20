@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 async function RequireAuth ({children}) {
     const handleLogin = async () => {
-        const res = await fetch(`${process.env.API_URL}/auth`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth`, {
             credentials: 'include',
             method: "GET",
         });

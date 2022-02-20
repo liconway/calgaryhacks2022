@@ -8,7 +8,7 @@ function LogoutButton() {
 
     return (
         <GoogleLogout
-            clientId={process.env.GOOGLE_CLIENT_ID}  // your Google app client ID
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}  // your Google app client ID
             buttonText="Sign Out"
             onLogoutSuccess={onSuccess}
         />
