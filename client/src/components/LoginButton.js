@@ -20,7 +20,7 @@ function LoginButton() {
             console.log("Sending failed. Please try again.");
         } else {
             // Redirect
-            window.location.href = "#/journal";
+            window.location.href = "#/dashboard";
         }
     }
 

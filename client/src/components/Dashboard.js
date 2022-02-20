@@ -37,7 +37,7 @@ const Dashboard = () => {
         <Card.Body>
           <Card.Title>{journal.title}</Card.Title>
           <Card.Text>{journal.content}</Card.Text>
-          <Link to={`/journal/${journal._id}`}>
+          <Link to={`/details/${journal._id}`}>
             <button className="btn btn-primary">View Journal</button>
           </Link>
         </Card.Body>

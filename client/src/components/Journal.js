@@ -48,7 +48,7 @@ const Journal = () => {
     //return once saved
     setJournalID(data);
 
-    window.location.href = '/details/' + data;
+    window.location.href = '#/details/' + data;
 
   }
 
