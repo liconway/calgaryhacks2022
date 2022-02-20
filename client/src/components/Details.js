@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
+import Navigation from './Navigation';
 
 const Details = (journalID) => {
   const [journalTitle, setJournalTitle] = useState("");
@@ -39,6 +40,8 @@ const Details = (journalID) => {
 
   require("../css/Details.css");
   return (
+    <div>
+    <Navigation />
     <div class="d-flex justify-content-center main-div">
       <Container>
         <h1>Journal</h1>
@@ -82,6 +85,7 @@ const Details = (journalID) => {
           </Card.Footer>
         </Card>
       </Container>
+    </div>
     </div>
   );
 };

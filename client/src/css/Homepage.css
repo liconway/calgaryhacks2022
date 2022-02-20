@@ -1,5 +1,7 @@
 .container {
     background-color: aliceblue;
+    margin-top: 5%;
+    margin-bottom: 10%;
 }
 
 #sign-in {

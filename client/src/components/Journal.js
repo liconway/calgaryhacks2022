@@ -9,6 +9,8 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
 
+import Navigation from './Navigation';
+
 const Journal = () => {
   const [titleState, setTitleState] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -69,6 +71,7 @@ const Journal = () => {
     console.log(journal);
     event.preventDefault();
     saveJournal(journal);
+
   }
 
   function validateText() {
@@ -81,6 +84,8 @@ const Journal = () => {
   }
 
   return (
+    <div>
+    <Navigation />
     <div
       class="container"
       style={{ width: 800, height: 800, backgroundColor: "white" }}
@@ -136,6 +141,7 @@ const Journal = () => {
           </Modal.Footer>
         </Modal> */}
       </Form>
+    </div>
     </div>
   );
 };
