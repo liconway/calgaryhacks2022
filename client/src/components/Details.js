@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from "./Navigation";
-import img from "../img/wood.png";
 import { useParams } from "react-router-dom";
 
 const Details = () => {
@@ -93,9 +92,10 @@ const Details = () => {
 
   function convertUTC(unixTimeStamp) {
     var a = new Date(unixTimeStamp * 1000);
+    //return a.format("%A %b %d %I:%M:%S %p");
     var months = [
       "Jan",
-      "Feb",
+      "Feb", 
       "Mar",
       "Apr",
       "May",
