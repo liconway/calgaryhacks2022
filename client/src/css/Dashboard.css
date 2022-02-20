@@ -1,8 +1,58 @@
-.card {
-    width: 100%;
-    margin-bottom: 1em;
+body {
+  background: #e0eafc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.container {
-    background-color: rgb(162, 159, 159);
+.title {
+  text-align: center;
+  margin-top: 3em;
+}
+
+.btn {
+  transition: 0.3s linear;
+}
+
+.btn:hover {
+  transition: 0.3s linear;
+  transform: scale(1.1);
+}
+
+.card-element {
+  margin: 1em;
+  display: flex;
+  flex-direction: row;
+  margin: 2em auto;
+  text-align: center;
+  /* display: flex;
+  flex-wrap: wrap;
+  justify-content: center; */
+  border-radius: 1em;
+  background: #c9e6e7;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+  border: none;
+}
+
+.container-box {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  margin: 2em auto;
+  padding: 1em;
+  border: none;
+  border-radius: 1em;
+  background: #1d1b1b;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+  width: 30%;
+
+  /* background-color: rgb(71, 27, 27); */
 }
