@@ -8,6 +8,7 @@ import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card'
 
 import Navigation from './Navigation';
 import img from '../img/wood.png';
@@ -17,10 +18,63 @@ const Journal = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [journalID, setJournalID] = useState("");
   const [show, setShow] = useState(false);
+  const [promptList, setPromptList] = useState([
+    {},
+    {},
+    {},
+    {},
+    {}
+  ])
+
+  const promptTypeList = [
+    "generic",
+    "entity",
+    "sentence"
+  ]
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const fetchPrompt = async () => {
+    const promptType = promptTypeList[Math.floor(Math.random() * 3)]
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/prompt?prompt=${promptType}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (res.status === 200) {
+      var data = await res.json();
+      data = data['promptType'] = promptType
+      return data;
+    } else {
+        return null;
+    }
+  };
+
+  const showPrompts = promptList.map(prompt => {
+    const currPrompt = fetchPrompt()
+    if (currPrompt.promptType !== "generic")
+      return (
+        <Card border="primary" style={{ width: '18rem' }}>
+          <Card.Header>{currPrompt.promptType}</Card.Header>
+          <Card.Body>
+            <Card.Title>{currPrompt.name}</Card.Title>
+            <Card.Text>{currPrompt.pre_text}</Card.Text>
+          </Card.Body>
+        </Card>
+      );
+    else
+      return (
+        <Card border="primary" style={{ width: '18rem' }}>
+        <Card.Header>{currPrompt.promptType}</Card.Header>
+        <Card.Body>
+          <Card.Text>{currPrompt.pre_text}</Card.Text>
+        </Card.Body>
+      </Card>
+      )
+  })
 
   const handleSave = async (event) => {
     event.preventDefault();
@@ -49,7 +103,6 @@ const Journal = () => {
     setJournalID(data);
 
     window.location.href = '#/details/' + data;
-
   }
 
   function validateText() {
@@ -61,6 +114,7 @@ const Journal = () => {
     return false;
   }
 
+  require("../css/Journal.css");
   return (
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
     <Navigation />
@@ -117,6 +171,9 @@ const Journal = () => {
         </Modal>
       </Form>
     </div>
+      <div class="entity-group">
+        {showPrompts}
+      </div>
     </div>
   );
 };
