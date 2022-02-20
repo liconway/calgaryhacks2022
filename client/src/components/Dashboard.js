@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
+  require("../css/Dashboard.css");
+
   const [journals, setJournals] = useState({
    "journals": []
    });
@@ -46,7 +48,6 @@ const Dashboard = () => {
   });
 
   
-  require("../css/Dashboard.css");
   return (  
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
       <Navigation />

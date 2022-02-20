@@ -5,24 +5,34 @@ import Navigation from './Navigation';
 import img from '../img/wood.png';
 import { useParams } from "react-router-dom";
 
+
 const Details = () => {
   const {journalID} = useParams();
-  const [journalTitle, setJournalTitle] = useState("");
-  const [journalContent, setJournalContent] = useState("");
-  const [positiveSuggestions, setPositiveSuggestions] = useState("");
-  const [negativeSuggestions, setNegativeSuggestions] = useState("");
+  const [journal, setJournal] = useState({
+    text: "",
+    sentiment: {
+      score: 0,
+      magnitude: 0
+    },
+    entities: [],
+    sentences: {
+      positive: [],
+      negative: []
+    }
+  });
+
+  require("../css/Details.css");
 
     useEffect(() => {
       const getJournalInfo = async () => {
         const res = await fetchJournal();
         if (res != null) {
-            setJournalTitle(res.title);
-            setJournalContent(res.text);
-            setPositiveSuggestions(res.sentences);
-            setNegativeSuggestions(res.sentences);
+          let text = res.text;
+          let result = text.replace(/\u0001/g, '\n');
+          res.text = result;
+          console.log(res.text);
+            setJournal(res);
         }
-
-
       };
       getJournalInfo();
     }, []);
@@ -35,9 +45,6 @@ const Details = () => {
         {
           method: "GET",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
       if (res.status == 200) {
@@ -47,21 +54,85 @@ const Details = () => {
       } else {
           return null;
       }
-      
     };
 
-  require("../css/Details.css");
+    function getHighlightedText( highlight) {
+      // Split on highlight term and include term into parts, gnore case
+      const text = journal.text;
+      const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+      return <span> { parts.map((part, i) => 
+          <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold', color: 'red', backgroundColor: 'blue' } : {} }>
+            {part}
+          </span>)
+      } </span>;
+  }
+
+  //split the text into sentences, each stored into a span
+  function splitByPeriod (text) {
+    let sentences = text.split(/[.?!]/);
+    return sentences.map((sentence, i) => {
+      //return sentences.length > 0 ? <span key={i}>{sentence + '.'}</span> : <span key={i}>{sentence}</span> ;
+      return <span key={i}>{sentence + '.'}</span>;
+    });
+  }
+ 
+
+    const listPositives = journal.sentences.positive.map(sentence => {
+    return (
+      <div onClick={() => handleClick(sentence.text)}>
+      <Card hoverable style={{backgroundColor:"green", color:"white"}}>
+      <Card.Body>
+        <Card.Text>
+          <p>
+          {sentence.text}
+          </p>
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer>
+      </Card.Footer>
+      </Card>
+      </div>
+    );
+  });
+  
+  const handleClick = (sentence) => {
+    
+    console.log(sentence);
+  }
+
+  const listNegative = journal.sentences.negative.map(sentence => {
+    return (
+      <div onClick={() => handleClick(sentence.text)}>
+      <Card hoverable style={{backgroundColor:"red", color:"white"}}>
+      <Card.Body>
+        <Card.Text>
+          <p>
+          {sentence.text}
+          </p>
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer>
+      </Card.Footer>
+      </Card>
+      </div>
+    );
+  });
+
+
   return (
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
     <Navigation />
-    <div class="d-flex justify-content-center main-div">
-      <Container>
-        <h1>{journalTitle}</h1>
-        <p>journalContent</p>
+    <div class="d-flex justify-content-center main-div" style={{whiteSpace: "pre-wrap"}}>
+      <Container className="bodyContainer">
+        <h1>{journal.title}</h1>
+        <p>{splitByPeriod(journal.text)}</p>
       </Container>
 
-      <Container fluid>
-        <Card>
+      <Container className="sentences">
+        {listPositives}
+        {listNegative}
+        </Container>
+        {/* <Card>
           <Card.Body>
             <Card.Text>
             dfgdfgdfg
@@ -94,8 +165,8 @@ const Details = () => {
           <Card.Footer>
             <small className="text-muted">Last updated 3 mins ago</small>
           </Card.Footer>
-        </Card>
-      </Container>
+        </Card> */}
+      
     </div>
     </div>
   );
