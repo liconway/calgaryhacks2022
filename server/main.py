@@ -2,10 +2,12 @@ from flask import Flask, request
 from flask_cors import CORS
 from pymongo import MongoClient
 import os
+import pymongo
 # import json
 from dotenv import load_dotenv
 # Imports the Google Cloud client library
 from google.cloud import language_v1
+from bson.objectid import ObjectId
 
 # Load configuration from environment
 load_dotenv()
@@ -41,7 +43,7 @@ if 'PORT' in config:
 
 @app.route("/health", methods=['GET'])
 def health_check():
-   return "it worky!\n"
+   return ("it worky!\n", 200)
 
 
 @app.route("/dewit", methods=['GET'])
@@ -51,8 +53,20 @@ def get_data():
    data = journal_entry_collection.find(content)
    return f"{data[0]}\n"
 
+@app.route("/journals", methods=['GET'])
+def get_journal():
+   journal_id = request.args.get('id', default="", type=str)
+   print(journal_id)
+   print(ObjectId(journal_id))
+   journal = journal_entry_collection.find({
+      "_id": ObjectId(journal_id)
+   })
+   journal = journal[0]
+   journal['_id'] = journal_id
 
-@app.route("/note", methods=['POST'])
+   return (journal, 200)
+
+@app.route("/journals", methods=['POST'])
 def lang_note():
    json_content = request.get_json()
    print(json_content)
@@ -73,9 +87,8 @@ def lang_note():
    db_doc['sentences']  = handle_sentences(doc_analyzed.sentences)
    db_doc['language']  = doc_analyzed.language
 
-   journal_entry_collection.insert_one(db_doc)
-
-   return f"Document successfully added!\n"
+   mongo_id = journal_entry_collection.insert_one(db_doc)
+   return (str(mongo_id.inserted_id), 200)
 
 
 def handle_sentiment(sentiment):
