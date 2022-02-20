@@ -126,19 +126,6 @@ def get_prompt():
    return (output, 200)
 
 
-@app.route("/analysis", methods=['GET'])
-@authenticated
-def get_analysis():
-   journal_id = request.args.get('id', default="", type=str)
-   journal = db[session['user_id']].find({
-      "_id": ObjectId(journal_id)
-   })
-   journal = journal[0]
-   journal['_id'] = journal_id
-
-   return ("lol", 200)
-
-
 @app.route("/journal", methods=['GET'])
 @authenticated
 def get_journal():
