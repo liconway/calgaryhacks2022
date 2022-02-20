@@ -46,6 +46,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
 if 'FLASK_SECRET_KEY' in config:
    app.config['SECRET_KEY'] = config['FLASK_SECRET_KEY']
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
 
 cors = CORS(app, supports_credentials=True)
 
