@@ -26,6 +26,7 @@ const Dashboard = () => {
       credentials: "include",
     });
     const data = await res.json();
+    console.log(data);
     return data;
   };
 
@@ -38,19 +39,45 @@ const Dashboard = () => {
           <Link to={`/details/${journal._id}`}>
             <button className="btn btn-primary">View Journal</button>
           </Link>
+          <Card.Footer>
+            <small className="text-muted">{convertUTC(journal.time_created)}</small>
+          </Card.Footer>
         </Card.Body>
       </Card>
     );
   });
 
-  require("../css/Dashboard.css");
+  function convertUTC(unixTimeStamp) {
+    var a = new Date(unixTimeStamp * 1000);
+    var months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time =
+      date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
+    return time;
+  }
+
   return (
-    <div
-      className="main-dashboard"
-      // style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}
-    >
+    <div className="main-dashboard">
       <Navigation />
-      <h1 className="title">Welcome to your Journal</h1>
+      <h1 className="title">Welcome to your Journable</h1>
       <Container className="container-box">{listJournals}</Container>
     </div>
   );
