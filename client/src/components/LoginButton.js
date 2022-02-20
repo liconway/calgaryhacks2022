@@ -4,12 +4,8 @@ import { GoogleLogin } from 'react-google-login';
 
 function LoginButton() {
 
-    const clientId = '518828783452-4vdk5panaua9s8entiv5ljoqvbo7l4j5.apps.googleusercontent.com'
-    const endpoint = 'https://ch22-api.herokuapp.com/auth/login';
-    const endpoint2 = 'http://localhost:1234/auth/login';
-
     const handleLogin = async (googleData) => {
-        const res = await fetch(endpoint2, {
+        const res = await fetch(`${process.env.API_URL}/auth/login`, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify({
@@ -30,17 +26,18 @@ function LoginButton() {
 
     const errorResponseGoogle = (response) => {
         console.log("Error: unable to login with Google Authentication.");
+        console.log(response);
     }
-    
-    return (   
+
+    return (
         <div>
         <GoogleLogin
-            clientId={clientId}  // your Google app client ID
+            clientId={process.env.GOOGLE_CLIENT_ID}  // your Google app client ID
             onSuccess={handleLogin}
             onFailure={errorResponseGoogle}
             buttonText="Sign in with Google"
         />
-        </div>             
+        </div>
     );
 }
 
