@@ -3,6 +3,8 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from "./Navigation";
 import img from "../img/wood.png";
+import { Link } from 'react-router-dom';
+
 
 const Dashboard = () => {
   const [journalTitle, setJournalTitle] = useState("");
@@ -34,6 +36,7 @@ const Dashboard = () => {
     <div style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}>
       <Navigation />
       <Container>
+          <Link to="/details" style={{ color: 'inherit', textDecoration: 'none' }}>
         <Card>
           <Card.Body>
             <Card.Title>
@@ -44,6 +47,8 @@ const Dashboard = () => {
             <small className="text-muted">Timestamp</small>
           </Card.Footer>
         </Card>
+        </Link>
+        <Link to="/details" style={{ color: 'inherit', textDecoration: 'none' }}>
         <Card>
           <Card.Body>
             <Card.Title>
@@ -54,6 +59,7 @@ const Dashboard = () => {
             <small className="text-muted">Timestamp</small>
           </Card.Footer>
         </Card>
+        </Link>
       </Container>
     </div>
   );
