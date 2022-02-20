@@ -95,7 +95,7 @@ const Details = () => {
     //return a.format("%A %b %d %I:%M:%S %p");
     var months = [
       "Jan",
-      "Feb", 
+      "Feb",
       "Mar",
       "Apr",
       "May",
@@ -121,13 +121,16 @@ const Details = () => {
   const listPositives = journal.sentences.positive.map((sentence) => {
     return (
       <div onClick={() => handleClick(sentence.text)}>
-        <Card className="sentence-cards" style={{ backgroundColor: "green", color: "white" }}>
+        <Card
+          className="sentence-cards"
+          style={{ backgroundColor: "green", color: "white" }}
+        >
           <Card.Body>
             <Card.Text>
               <p>{sentence.text}</p>
             </Card.Text>
           </Card.Body>
-          <Card.Footer></Card.Footer>
+          {/* <Card.Footer></Card.Footer> */}
         </Card>
       </div>
     );
@@ -140,13 +143,16 @@ const Details = () => {
   const listNegative = journal.sentences.negative.map((sentence) => {
     return (
       <div onClick={() => handleClick(sentence.text)}>
-        <Card className="sentence-cards" style={{ backgroundColor: "red", color: "white" }}>
+        <Card
+          className="sentence-cards"
+          style={{ backgroundColor: "red", color: "white" }}
+        >
           <Card.Body>
             <Card.Text>
               <p>{sentence.text}</p>
             </Card.Text>
           </Card.Body>
-          <Card.Footer></Card.Footer>
+          {/* <Card.Footer></Card.Footer> */}
         </Card>
       </div>
     );
@@ -160,9 +166,7 @@ const Details = () => {
       }}
     >
       <Navigation />
-      <div
-        className="d-flex justify-content-center main-div"
-      >
+      <div className="d-flex justify-content-center main-div">
         <Container className="bodyContainer">
           <h1>{journal.title}</h1>
           <h5>{convertUTC(journal.time_created)}</h5>
@@ -170,6 +174,11 @@ const Details = () => {
         </Container>
 
         <Container className="sentences">
+          <h1>Sentiment</h1>
+          <p style={{ textAlign: "center" }}>
+            <span className="red">Red</span> denotes negative sentiment and{" "}
+            <span className="green">Green </span> denotes positive Sentiment
+          </p>
           {listPositives}
           {listNegative}
         </Container>

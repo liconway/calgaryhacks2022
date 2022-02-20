@@ -19,6 +19,7 @@ body {
 
 .btn {
   transition: 0.3s linear;
+  border-radius: 0.7em;
   margin-bottom: 1em;
 }
 

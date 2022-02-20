@@ -36,10 +36,12 @@ const Dashboard = () => {
           <Card.Title>{journal.title}</Card.Title>
           <Card.Text>{journal.content}</Card.Text>
           <Link to={`/details/${journal._id}`}>
-            <button className="btn btn-primary">View Journal</button>
+            <button className="btn btn-success">View Journal</button>
           </Link>
           <Card.Footer>
-            <small className="text-muted">{convertUTC(journal.time_created)}</small>
+            <small className="text-muted">
+              {convertUTC(journal.time_created)}
+            </small>
           </Card.Footer>
         </Card.Body>
       </Card>
@@ -76,8 +78,19 @@ const Dashboard = () => {
   return (
     <div className="main-dashboard">
       <Navigation />
-      <h1 className="title">Welcome to your Journable</h1>
-      <Container className="container-box">{listJournals}</Container>
+      <h1 className="title">Welcome to your Journal</h1>
+      <Container className="container-box">
+        <Card className="card-element" style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>{"Create a new Entry"}</Card.Title>
+            {/* <Card.Text>{journal.content}</Card.Text> */}
+            <Link to={`/journal`}>
+              <button className="btn btn-primary">Start New Journal</button>
+            </Link>
+          </Card.Body>
+        </Card>
+        {listJournals}
+      </Container>
     </div>
   );
 };
