@@ -1,0 +1,23 @@
+.container {
+    background-color: aliceblue;
+}
+
+#sign-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#hero {
+    display: flex;
+    justify-content: flex-end;
+}
+
