@@ -43,11 +43,9 @@ const Dashboard = () => {
     );
   });
 
-  require("../css/Dashboard.css");
   return (
     <div
       className="main-dashboard"
-      // style={{ backgroundImage: `url(${img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', height: '100vh' }}
     >
       <Navigation />
       <h1 className="title">Welcome to your Journal</h1>
