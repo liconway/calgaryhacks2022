@@ -161,12 +161,11 @@ const Details = () => {
     >
       <Navigation />
       <div
-        class="d-flex justify-content-center main-div"
-        style={{ whiteSpace: "pre-wrap" }}
+        className="d-flex justify-content-center main-div"
       >
         <Container className="bodyContainer">
-          <h1 style={{ marginBottom: "5%" }}>{journal.title}</h1>
-          <h5 style={{ marginBottom: "5%" }}>{convertUTC(journal.time_created)}</h5>
+          <h1>{journal.title}</h1>
+          <h5>{convertUTC(journal.time_created)}</h5>
           <p>{splitByPeriod(journal.text)}</p>
         </Container>
 
