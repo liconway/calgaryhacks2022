@@ -10,23 +10,23 @@ const App = () => {
         <Router>
         <Routes>
             <Route path="/" element={<Homepage/>} />
-            {/* <Route path="/journal" element={<Journal />} />
-            <Route path="/details" element={<Details />} /> */}
-            <Route 
+            <Route path="/journal" element={<Journal />} />
+            <Route path="/details" element={<Details />} />
+            {/* <Route 
                 path="/journal" 
                 element={
                     <RequireAuth>
                         <Journal />
                     </RequireAuth>
                 } 
-            />
-            <Route 
+            /> */}
+            {/* <Route 
                 path="/details" 
                 element={
                     <RequireAuth>
                         <Details />
                     </RequireAuth>
-            } />
+            } /> */}
         </Routes>
         </Router>
     );
