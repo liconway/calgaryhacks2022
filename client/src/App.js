@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Journal from './components/Journal';
 import Details from './components/Details';
@@ -13,16 +13,16 @@ const App = () => {
             <Route path="/journal" element={<Journal />} />
             <Route path="/details/:journalID" element={<Details />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* <Route 
-                path="/journal" 
+            {/* <Route
+                path="/journal"
                 element={
                     <RequireAuth>
                         <Journal />
                     </RequireAuth>
-                } 
+                }
             />g
-            <Route 
-                path="/details" 
+            <Route
+                path="/details"
                 element={
                     <RequireAuth>
                         <Details />
