@@ -135,6 +135,19 @@ def get_prompt():
    return (output, 200)
 
 
+@app.route("/analysis", methods=['GET'])
+@authenticated
+def get_analysis():
+   journal_id = request.args.get('id', default="", type=str)
+   journal = db[session['user_id']].find({
+      "_id": ObjectId(journal_id)
+   })
+   journal = journal[0]
+   journal['_id'] = journal_id
+
+   return ("lol", 200)
+
+
 @app.route("/journal", methods=['GET'])
 @authenticated
 def get_journal():
@@ -255,6 +268,7 @@ def handle_entity_prompt():
          entity_list.append(entity)
 
    entity = entity_list[random.randrange(0, len(entity_list))]
+   entity['pre_text'] = prompt_list['entity_pretext'][random.randrange(0, len(prompt_list['entity_pretext']))]
    return entity
 
 
@@ -270,6 +284,13 @@ def handle_sentence_prompt():
 
    sentence = sentence_list[random.randrange(0, len(sentence_list))]
 
+   prompt_str = "neutral_sentence_pretext"
+   if (sentence['sentiment']['score'] > 0.3):
+      prompt_str = "positive_sentence_pretext"
+   elif (sentence['sentiment']['score'] < -0.3):
+      prompt_str = "negative_sentence_pretext"
+
+   sentence['pre_text'] = prompt_list[prompt_str][random.randrange(0, len(prompt_list[prompt_str]))]
    return sentence
 
 if __name__ == "__main__":

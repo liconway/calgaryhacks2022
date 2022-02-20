@@ -1,7 +1,7 @@
 {
    "generic_prompt_list": [
       "Write about your day.",
-      "What values do you consider most important in life (honesty, justice, altruism, loyalty, etc.)? How do your actions align with those values?",
+      "What values do you consider most important in life? How do your actions align with those values?",
       "What do you appreciate most about your personality? What aspects do you find harder to accept?",
       "Explore an opinion or two that you held in the past but have since questioned or changed. What led you to change that opinion?",
       "List three personal beliefs that you’re willing to reconsider or further explore.",
@@ -10,7 +10,7 @@
       "When do you trust yourself most? When do you find it harder to have faith in your instincts?",
       "What three things would you most like others (loved ones, potential friends and partners, professional acquaintances, etc.) to know about you?",
       "What difficult thoughts or emotions come up most frequently for you?",
-      "Which emotions do you find hardest to accept (guilt, anger, disappointment, etc.)? How do you handle these emotions?",
+      "Which emotions do you find hardest to accept? How do you handle these emotions?",
       "Describe a choice you regret. What did you learn from it?",
       "What parts of daily life cause stress, frustration, or sadness? What can you do to change those experiences?",
       "Describe your favorite thing to do when feeling low.",
@@ -23,20 +23,25 @@
       "What do you look forward to most in the future?",
       "What helps you stay focused and motivated when you feel discouraged?",
       "What do you most want to accomplish in life?",
-      "What do you value most in relationships (trust, respect, sense of humor, etc.)?",
+      "What do you value most in relationships?",
       "What does love mean to you? How do you recognize it in a relationship?",
       "List three things you’d like to tell a friend, family member, or partner.",
       "What are your career ambitions?",
       "Does your work drain or overwhelm you? Why? Is this something you can change?"
    ],
-   "positive_sentence_pre_text": [
-      "Would you like to elaborate on this?",
+   "positive_sentence_pretext": [
+      "Would you like to elaborate on this point?",
       "That's great! Want to talk more about it?"
    ],
-   "neutral_sentence_pre_text": [
+   "neutral_sentence_pretext": [
       "Would you like to elaborate on this?"
    ],
-   "negative_sentence_pre_text": [
-      "Would you like to elaborate on this?"
+   "negative_sentence_pretext": [
+      "Would you like to talk more about this?"
+   ],
+   "entity_pretext": [
+      "Try talking more about this.",
+      "What do you think about this now?",
+      "How does this make you feel now?"
    ]
 }
