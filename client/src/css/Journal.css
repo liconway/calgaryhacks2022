@@ -1,31 +1,48 @@
 body {
-   background: #e0eafc; /* fallback for old browsers */
-   background: -webkit-linear-gradient(
-     to right,
-     #cfdef3,
-     #e0eafc
-   ); /* Chrome 10-25, Safari 5.1-6 */
-   background: linear-gradient(
-     to right,
-     #cfdef3,
-     #e0eafc
-   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
- }
+  background: #e0eafc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #cfdef3,
+    #e0eafc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
-.entity-group{
-   float: left;
-   margin-left: 20px;
-   margin-right: 20px;
-   margin-top: 100px;
-   font-weight: bold;
+.entity-group {
+  float: left;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 100px;
+  font-weight: bold;
 }
 
 .editor {
-   float: left;
-   margin-left: 25%;
-   margin-top: 100px;
+  float: left;
+  margin-left: 25%;
+  margin-top: 100px;
 }
 
 .card {
-   margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1500px) {
+  .editor {
+    margin-left: 15%;
+  }
+}
+
+@media screen and (max-width: 1350px) {
+  .editor {
+    margin-left: 8%;
+  }
+}
+
+@media screen and (max-width: 1230px) {
+  .editor {
+    margin-left: 4%;
+  }
 }
